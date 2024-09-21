@@ -3,7 +3,7 @@ title: About the Class
 feature_text: |
   ## Emily Ebalo - Data Science Capstone
   Projects, research, and other material as part of the Fall 2024 DATA 440: Data Science Application Capstone class.
-feature_image: "https://picsum.photos/1300/400?image=989"
+feature_image: "https://www.freepik.com/free-photos-vectors/data"
 excerpt: "Projects and research as part of my Capstone class. Please feel free to look around my site."
 ---
 
