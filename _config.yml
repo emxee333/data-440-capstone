@@ -108,9 +108,9 @@ navigation_header:
 - title: Home
   url: /
 - title: Class Projects
-  url: /classprojects/
+  url: data-440-capstone/classprojects/
 - title: Research
-  url: /research/
+  url: data-440-capstone/research/
 - title: Alembic Theme
   url: https://github.com/daviddarnes/alembic
 
