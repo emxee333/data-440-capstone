@@ -121,7 +121,7 @@ navigation_footer:
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
 #  Twitter: https://twitter.com/DavidDarnes
   LinkedIn: https://www.linkedin.com/in/emily-ebalo/
-  GitHub:https://github.com/emxee333
+  GitHub: https://github.com/emxee333
   link: https://emxee333.github.io/
  # RSS: /feed.xml
 
