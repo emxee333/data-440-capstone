@@ -13,8 +13,7 @@ image: "https://picsum.photos/2560/600?image=733"
 
 Importing necessary libraries:
 
-```
-python
+```python
 # Libraries of functions need to be imported
 import numpy as np
 import pandas as pd
@@ -36,8 +35,7 @@ from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 
 Defining kernel functions
 
-```
-python
+```python
 # Gaussian Kernel
 def Gaussian(x):
   return np.where(np.abs(x)>4,0,1/(np.sqrt(2*np.pi))*np.exp(-1/2*x**2))
@@ -57,9 +55,7 @@ def Quartic(x):
 
 Now creating my class:
 
-```
-python
-
+```python
 class MyLowess():
   def __init__(self, kernel=Gaussian, tau=0.2, model=Ridge()):
     self.kernel = kernel
