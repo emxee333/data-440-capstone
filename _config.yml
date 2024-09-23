@@ -106,11 +106,11 @@ favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
 # 9. Site navigation
 navigation_header:
 - title: Home
-  url: /
+  url: /data-440-capstone/
 - title: Class Projects
-  url: /classprojects/
+  url: /data-440-capstone/classprojects/
 - title: Research
-  url: /research/
+  url: /data-440-capstone/research/
 
 
 navigation_footer:
