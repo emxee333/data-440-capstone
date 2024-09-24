@@ -19,7 +19,11 @@ Gradient Boosting can be prone to overfitting, so it's important to consider [so
 In this particular implementation,  locally weighted regression method (Lowess class), and that allows a user-prescribed number of boosting steps. 
 
 
-### Locally Weighted Logistic Regression
+#### Show applications with real data for regression, 10-fold cross-validations and compare the effect of different scalers, such as the “StandardScaler”, “MinMaxScaler”, and the “QuantileScaler”. 
+
+#### In the case of the “Concrete” data set, determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
+
+
 
 ### References
 1. <https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-1-regression-2520a34a502>
