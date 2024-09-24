@@ -5,7 +5,7 @@ categories:
 excerpt: |
   LOESS (Locally Estimated Scatterplot Smoothing) is a non-parametric regression technique used to fit a smooth curve through a set of data points.
 feature_text: |
-  ## Assingment 1
+  ## Assignment 1
   Creating a class for the LOESS function
 feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
