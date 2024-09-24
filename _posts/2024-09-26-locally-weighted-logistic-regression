@@ -1,0 +1,19 @@
+---
+title: Locally Weighted Logistic Regression
+categories:
+- General
+excerpt: |
+  LOESS (Locally Estimated Scatterplot Smoothing) is a non-parametric regression technique used to fit a smooth curve through a set of data points.
+feature_text: |
+  ## Assignment 2 Part 1
+  Creating a class for the LOESS function
+feature_image: "https://picsum.photos/2560/600?image=733"
+image: "https://picsum.photos/2560/600?image=733"
+---
+### Locally Weighted Logistic Regression
+
+### References
+1. <https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-1-regression-2520a34a502>
+2. <https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/>
+
+
