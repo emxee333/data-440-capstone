@@ -11,7 +11,7 @@ feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
 ### Locally Weighted Logistic Regression
-
+Logistic regression is similar to a linear regression but noooooo something about two classes and a sigmoid 
 ### References
 1. <https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-1-regression-2520a34a502>
 2. <https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/>
