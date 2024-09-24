@@ -81,7 +81,7 @@ title: "Ebalo Capstone Project" # Site name or title, also used in jekyll-seo-ta
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
 description: "Projects, research, and other material as part of the Fall 2024 DATA 440: Data Science Application Capstone class." # Site description and default description, also used in jekyll-seo-tag
 url: "https://emxee333.github.io/data-440-capstone/" # Site url, also used in jekyll-seo-tag
-baseurl: "/data-440-capstone/"
+baseurl: ""
 repo: "https://emxee333.github.io/data-440-capstone/"
 #email: "me@daviddarnes.com"
 # disqus: "alembic-1" # Blog post comments, uncomment the option and set the site ID from your Disqus account
