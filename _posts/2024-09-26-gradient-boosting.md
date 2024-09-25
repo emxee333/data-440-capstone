@@ -19,7 +19,10 @@ Gradient Boosting can be prone to overfitting, so it's important to consider [so
 In this particular implementation,  locally weighted regression method (Lowess class), and that allows a user-prescribed number of boosting steps. 
 
 
-#### Show applications with real data for regression, 10-fold cross-validations and compare the effect of different scalers, such as the “StandardScaler”, “MinMaxScaler”, and the “QuantileScaler”. 
+#### How does scaling the data affect our model?
+Data scaling transforms the dataset to a common scale aross all variables. This can improve model performance, make comparison between variables
+
+Show applications with real data for regression, 10-fold cross-validations and compare the effect of different scalers, such as the “StandardScaler”, “MinMaxScaler”, and the “QuantileScaler”. 
 
 StandardScaler uses the z-score
 
