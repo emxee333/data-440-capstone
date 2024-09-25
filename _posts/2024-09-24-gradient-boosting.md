@@ -3,7 +3,7 @@ title: Gradient Boosting and LOESS
 categories:
 - General
 excerpt: |
-  LOESS (Locally Estimated Scatterplot Smoothing) is a non-parametric regression technique used to fit a smooth curve through a set of data points.
+  Gradient Boosting Algorithim using the LOESS function and Comparison of scalars
 feature_text: |
   ## Assignment 2 Part 1
   Creating a class for the LOESS function
@@ -21,7 +21,16 @@ In this particular implementation,  locally weighted regression method (Lowess c
 
 #### Show applications with real data for regression, 10-fold cross-validations and compare the effect of different scalers, such as the “StandardScaler”, “MinMaxScaler”, and the “QuantileScaler”. 
 
+StandardScaler uses the z-score
+
+MinMaxScaler scales the data to [0,1]
+
+QuantileScaler
+
 #### In the case of the “Concrete” data set, determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
+
+- Elbow method
+- GridSearchCV
 
 
 
