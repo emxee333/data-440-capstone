@@ -10,7 +10,9 @@ feature_text: |
 feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
-### Gradient Boosting
+# Gradient Boosting
+
+## Introduction
 Gradient Boosting is an ensemble learning method, meaning it uses multiple models to improve its predictive performance. By training weak learner models
 iteratively, it seeks to improve performance by correcting the residuals in the previous model. The final prediction is the sum of all the individual predictions.
 
@@ -18,6 +20,7 @@ Gradient Boosting can be prone to overfitting due to its number of its iteration
 
 In this particular implementation, we have a locally weighted regression method ([Lowess class, I created in my previous project! ](https://emxee333.github.io/data-440-capstone//general/2024/09/13/proj1loess/)) that allows a user-prescribed number of boosting steps. 
 
+## Implementation
 ```python
 class MyBoostedLowess():
   def __init__(self, n_boosting_steps=10, learning_rate=0.01):
@@ -73,7 +76,7 @@ class MyBoostedLowess():
 
 ```
 
-#### How does scaling the data affect our model?
+## How does scaling the data affect our model?
 Data scaling transforms the dataset to a common scale aross all variables. This can improve model performance, make comparison between variables.
 
 StandardScaler follows the normal distribution, meaning the data is rescaled to unit variance and the mean = 0. The MinMaxScaler scales the data to [0,1] or [-1,1] if there are negative values in the dataset. The QuantileTransformer scales the data to have a Gaussian or uniform probability distribution.
@@ -110,7 +113,7 @@ The Cross-validated Root Mean Squared Error for Locally Weighted Regression with
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler MinMaxScaler is: 24.072497870070347
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler QuantileTransformer is: 23.13218421808465
 
-#### Hyperparameter Optimization and XGBoost Comparison
+## Hyperparameter Optimization and XGBoost Comparison
 
 Using the “Concrete” data set, we want determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
 
