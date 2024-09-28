@@ -14,9 +14,9 @@ image: "https://picsum.photos/2560/600?image=733"
 Gradient Boosting is an ensemble learning method, meaning it uses multiple models to improve its predictive performance. By training weak learner models
 iteratively, it seeks to improve performance by correcting the residuals in the previous model. The final prediction is the sum of all the individual predictions.
 
-Gradient Boosting can be prone to overfitting, so it's important to consider [something lmao].
+Gradient Boosting can be prone to overfitting due to its number of its iterations on training set errors and emphasis on outliers, so it's important to consider ways to mitigate overfitting our model. This can be done by introducing regularization or finetuning hyperparameters [1,2]. 
 
-In this particular implementation,  locally weighted regression method (Lowess class), and that allows a user-prescribed number of boosting steps. 
+In this particular implementation, we have a locally weighted regression method ([Lowess class, I created in my previous project! ](https://emxee333.github.io/data-440-capstone//general/2024/09/13/proj1loess/)) that allows a user-prescribed number of boosting steps. 
 
 ```python
 class MyBoostedLowess():
@@ -74,17 +74,47 @@ class MyBoostedLowess():
 ```
 
 #### How does scaling the data affect our model?
-Data scaling transforms the dataset to a common scale aross all variables. This can improve model performance, make comparison between variables
+Data scaling transforms the dataset to a common scale aross all variables. This can improve model performance, make comparison between variables.
 
-Show applications with real data for regression, 10-fold cross-validations and compare the effect of different scalers, such as the “StandardScaler”, “MinMaxScaler”, and the “QuantileScaler”. 
+StandardScaler follows the normal distribution, meaning the data is rescaled to unit variance and the mean = 0. The MinMaxScaler scales the data to [0,1] or [-1,1] if there are negative values in the dataset. The QuantileTransformer scales the data to have a Gaussian or uniform probability distribution.
 
-StandardScaler uses the z-score
+To compare the differences between the scalers, I did a 10-fold cross-validation with each of the scalers:
 
-MinMaxScaler scales the data to [0,1]
+```python
+kf = KFold(n_splits=10,shuffle=True,random_state=1234)
 
-QuantileScaler
+boostedmodel = MyBoostedLowess()
+scalers = [StandardScaler(), MinMaxScaler(), QuantileTransformer()]
+rmse_dict= {'StandardScaler': None, 'MinMaxScaler': None, 'QuantileTransformer': None}
+rmse_keys= list(mse_dict.keys())
 
-#### In the case of the “Concrete” data set, determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
+for i in range(len(scalers)):
+  scale = scalers[i]
+  for idxtrain, idxtest in kf.split(x):
+    xtrain = x[idxtrain]
+    ytrain = y[idxtrain]
+    ytest = y[idxtest]
+    xtest = x[idxtest]
+    xtrain = scale.fit_transform(xtrain)
+    xtest = scale.transform(xtest)
+
+    boostedmodel.fit(xtrain,ytrain)
+    yhat_lw = boostedmodel.predict(xtest)
+    rmse_dict[mse_keys[i]]=(root_mean_squared_error(ytest,yhat_lw))
+
+  print('The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler '+ rmse_keys[i] + ' is: ' \ str(np.mean(mse_dict[mse_keys[i]])))
+```
+
+The resulted output is as follows:
+The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler StandardScaler is: 26.710550810405948
+The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler MinMaxScaler is: 24.072497870070347
+The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler QuantileTransformer is: 23.13218421808465
+
+#### Hyperparameter Optimization and XGBoost Comparison
+
+Using the “Concrete” data set, we want determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
+
+The XGBoost model [].
 
 ```python
 from sklearn.model_selection import GridSearchCV
@@ -124,7 +154,6 @@ print("MSE on the test set with best model: ", mse_best)
 ```
 
 ```python
-# Compare with XGBoost
 xgb_model = xgb.XGBRegressor()
 xgb_model.fit(xtrain, ytrain)
 y_pred_xgb = xgb_model.predict(xtest)
