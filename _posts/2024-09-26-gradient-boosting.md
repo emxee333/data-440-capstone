@@ -2,11 +2,12 @@
 title: Gradient Boosting and LOESS
 categories:
 - General
+- Assignment 2
 excerpt: |
-  Gradient Boosting Algorithim using the LOESS function and Comparison of scalars
+  Gradient Boosting Algorithim using the LOESS function and Comparison of scalers
 feature_text: |
   ## Assignment 2 Part 1
-  Creating a class for the LOESS function
+  My take on a Gradient Boosting LOESS model + an attempt to surpass XGBoost
 feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
@@ -105,13 +106,15 @@ for i in range(len(scalers)):
     yhat_lw = boostedmodel.predict(xtest)
     rmse_dict[mse_keys[i]]=(root_mean_squared_error(ytest,yhat_lw))
 
-  print('The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler '+ rmse_keys[i] + ' is: ' \ str(np.mean(mse_dict[mse_keys[i]])))
+  print('The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler '+ rmse_keys[i] + ' is: ' \ str(np.mean(rmse_dict[rmse_keys[i]])))
 ```
 
 The resulted output is as follows:
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler StandardScaler is: 26.710550810405948
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler MinMaxScaler is: 24.072497870070347
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler QuantileTransformer is: 23.13218421808465
+
+We can see that the QuantileTransformer yields better results for our model. Let's see how else we can improve our model.
 
 ## Hyperparameter Optimization and XGBoost Comparison
 
