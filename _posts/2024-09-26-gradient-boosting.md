@@ -75,7 +75,7 @@ class MyBoostedLowess():
     return mse(y,yhat,squared=False)
 
 ```
-
+## Evaluation
 ## How does scaling the data affect our model?
 Data scaling transforms the dataset to a common scale aross all variables. This can improve model performance, make comparison between variables.
 
