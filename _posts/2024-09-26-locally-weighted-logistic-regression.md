@@ -36,7 +36,9 @@ where
 > * $${\displaystyle h_\theta (x)=\dfrac{1}{1+exp(−x^⊤\theta)}}$$
 , the sigmoid function.
 
-> * Weight $${\displaystyle w^i=exp(−\dfrac{||x−x^i||^2}{2\tau^2})}$$ 
+> * Weight
+ $${\displaystyle \mathbb {w}^i=exp(−\dfrac{||x−x^i||^2}{2\tau^2})}$$ 
+
 weights the influence of each training datapoint $$x^i$$ on $$\theta$$
 
 
