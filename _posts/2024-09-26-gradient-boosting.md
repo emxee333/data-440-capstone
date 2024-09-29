@@ -110,8 +110,11 @@ for i in range(len(scalers)):
 ```
 
 The resulted output is as follows:
+
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler StandardScaler is: 26.710550810405948
+
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler MinMaxScaler is: 24.072497870070347
+
 The Cross-validated Root Mean Squared Error for Locally Weighted Regression with the scaler QuantileTransformer is: 23.13218421808465
 
 We can see that the QuantileTransformer yields better results for our model. Let's see how else we can improve our model.
@@ -119,8 +122,6 @@ We can see that the QuantileTransformer yields better results for our model. Let
 ## Hyperparameter Optimization and XGBoost Comparison
 
 Using the “Concrete” data set, we want determine a choice of hyperparameters that yield lower MSEs for your method when compared to the eXtream Gradient Boosting library.
-
-The XGBoost model [].
 
 ```python
 from sklearn.model_selection import GridSearchCV
