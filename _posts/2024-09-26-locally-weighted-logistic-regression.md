@@ -33,8 +33,11 @@ where
 > * Training point $$\mathbb i$$  is $$x \in \mathbb R^n$$ with label $$y^i \in 0,1$$
 > * Regularization parameter $$\lambda \in \mathbb R$$
 > * Model weights are $$\theta \in \mathbb R^n$$
-> * $${\displaystyle h_\theta (x)=\dfrac{1}{1+exp(−x^⊤\theta)}}$$, the sigmoid function.
-> * Weight $${\displaystyle w^i=exp(−\dfrac{||x−x^i||^2}{2\tau^2})}$$ weights the influence of each training datapoint $$x^i$$ on $$\theta$$
+> * $${\displaystyle h_\theta (x)=\dfrac{1}{1+exp(−x^⊤\theta)}}$$
+, the sigmoid function.
+
+> * Weight $${\displaystyle w^i=exp(−\dfrac{||x−x^i||^2}{2\tau^2})}$$ 
+weights the influence of each training datapoint $$x^i$$ on $$\theta$$
 
 
 #### Implementation
