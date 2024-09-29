@@ -164,7 +164,7 @@ for idxtrain, idxtest in kf.split(x):
   lwlr_model.fit(xtrain,ytrain)
   yhat_pred_prob = lwlr_model.predict_prob(xtest)
   yhat_pred=lwlr_model.predict(xtest)
-  lwlr_mse.append((mse(ytest,yhat_lw)))
+  lwlr_mse.append((mse(ytest,yhat_pred)))
 
 print('The Cross-validated Root Mean Squared Error for Locally Weighted Regression is : '+str(np.mean(lwlr_mse)))
 ```
