@@ -173,6 +173,9 @@ for idxtrain, idxtest in kf.split(x):
 
 print('The Cross-validated Root Mean Squared Error for Locally Weighted Regression is : '+str(np.mean(lwlr_mse)))
 ```
+We get the final output: The Cross-validated Root Mean Squared Error for Locally Weighted Regression is : 0.33333333333333337
+
+
 
 
 ### References
