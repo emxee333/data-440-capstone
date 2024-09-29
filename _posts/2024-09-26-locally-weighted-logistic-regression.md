@@ -2,25 +2,44 @@
 title: Locally Weighted Logistic Regression
 categories:
 - General
+- Assignment 2
 excerpt: |
-  LOESS (Locally Estimated Scatterplot Smoothing) is a non-parametric regression technique used to fit a smooth curve through a set of data points.
+  Creating a class for Locally Weighted Logistic Regression
 feature_text: |
   ## Assignment 2 Part 1
-  Creating a class for Locally Weighted Logistic Regression
+  Locally Weighted Logistic Regression for multi-classification!
 feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
 ### Locally Weighted Logistic Regression
 
 #### Introduction
-Logistic regression is used to predict the probability of each data entry belonging to a certain class. The logistic regression takes the linear regressio formula and transforms it using the sigmoid function. 
+Logistic regression is used to predict the probability of each data entry belonging to a certain class. The logistic regression takes the linear regression formula and transforms it using the sigmoid function. 
 
 $${\displaystyle p(x)={\frac {1}{1+e^{-(\beta _{0}+\beta _{1}x)}}}}$$
 
 In this case, we are using the softmax function, which can be used for multi-classification problems.
 
+$$
+\sigma(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
+$$
+
+From [Calvin Chi's excellent page on locally weighted logistic regression](https://calvintchi.github.io/classical_machine_learning/2020/08/16/lwlr.html):
+
+> Given a query point/test point $$x \in \mathbb R^n$$ and m training data points, the maximization objective of locally-weighted logistic regression is
+>
+>$$\mathbb{l}(\theta) = -\lambda2\theta^Tθ+ \sum_{i=1}^m w^i[y^i \log h\theta(x^i))+(1−y^i)\log(1−h\theta(x^i))]$$,
+where
+> * Training point $$\mathbb i$$  is $$x \in \mathbb R^n$$ with label $$y^i \in 0,1$$
+> * Regularization parameter $$\lambda \in \mathbb R$$
+> * Model weights are $$\theta \in \mathbb R^n$$
+> * $$h_\theta (x)=\dfrac{1}{1+exp(−x^⊤\theta)}$$, the sigmoid function.
+> * Weight $$w^i=exp(−\dfrac{||x−x^i||^2}{2\tau^2})$$ weights the influence of each training datapoint $$x^i$$ on $$\theta$$
+
 
 #### Implementation
+
+As part of my locally weighted logistic regression, I accounted for the possibility of multiple classes. I included a threshold level, max iteration, and regularization parameter on the weights
 
 ```python
 
