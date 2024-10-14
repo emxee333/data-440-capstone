@@ -495,9 +495,11 @@ sns.heatmap(np.corrcoef(np.transpose(x[:,:5])),cmap='bwr',vmin=-1,vmax=1,annot=T
 plt.show()
 ```
 #**insert images**
+
 {% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/_posts/images/happiness_plots.png" caption="Subplots of feature correlation" %}
 
 {% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/_posts/images/happiness_corrmatrix.png" caption="Correlation matrix" %}
+
 Comparing 
 ```python
 elastic_net_errors = []
