@@ -180,22 +180,24 @@ Epoch [1000/1000], Loss: 2.7189077447909478
 
 Finally, to look at what variables are important:
 ```python
-importance = model.linear.weight.detach().numpy().flatten()
+importance = model.get_coefficients()
 print("Feature importance based on SCAD regularization: ", importance)
 ```
 
 The output is:
 
 ```
-Feature importance based on SCAD regularization:  [ 1.68816155e+00  1.68729348e-04  6.36770909e-04  4.14120192e-03
- -2.12017700e-03 -1.54500250e-04]
+Feature importance based on SCAD regularization:
+tensor([[ 1.0890e+00,  3.0488e-04,  1.8458e+00, -1.4293e-03, -1.3319e-04,
+          2.3147e-04]], dtype=torch.float64, requires_grad=True)
 ```
+The coefficients that are not close to zero are significant variables based on SCAD regularization.
+Therefore, the variables, Social support and Freedom to make life choices are significant, positively correlated factors in Happiness scores.
 
-This demonstrates that all of the variables, Social support, Healthy life expectancy, Freedom to make life choices, Generosity, Perceptions of corruption are significant factors in Happiness scores. Based on the 
 # **fix this**
 
 ### Experimenting with ElasticNet, SqrtLasso, and SCAD
-Let's generate 200 data sets where the input features have a strong correlation structure and apply ElasticNet, SqrtLasso and SCAD to check which method produces the best approximation of an ideal solution. I'll use a "betastar" you design with a sparsity pattern of your choice.
+Let's generate 200 data sets where the input features have a strong correlation structure and apply ElasticNet, SqrtLasso and SCAD to check which method produces the best approximation of an ideal solution. I'll use a "betastar"  with a sparsity pattern of my choice.
 
 #### ElasticNet
 ```python
