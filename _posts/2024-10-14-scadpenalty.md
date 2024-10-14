@@ -47,13 +47,12 @@ class SCAD(nn.Module):
     def forward(self, x):
         return self.linear(x)
 
-    def scad_penalty(self, beta):
+    def scad_penalty(self, beta): #piecewise function of the derivative
       abs_beta = torch.abs(beta)
       penalty = torch.zeros_like(beta)
 
       case1 = abs_beta <=  self.lambda_val
       penalty[case1]= self.lambda_val*abs_beta[case1]
-        
         
       case2 = (self.lambda_val < abs_beta) & (abs_beta <= (self.alpha*self.lambda_val))
       penalty[case2]= -(abs_beta[case2]**2 - (2* self.lambda_val*self.alpha*abs_beta[case2])+ self.lambda_val**2)/(2*(self.alpha-1))
@@ -150,6 +149,7 @@ happiness_data.head()
 |2|3|Norway|7\.554|1\.488|1\.582|1\.028|0\.603|0\.271|0\.341|
 |3|4|Iceland|7\.494|1\.38|1\.624|1\.026|0\.591|0\.354|0\.118|
 |4|5|Netherlands|7\.488|1\.396|1\.522|0\.999|0\.557|0\.322|0\.298|
+
 
 We want to remove the columns 'Country or region' and 'Overall rank'. Score is the target variable. We want to convert the data into tensors so it's compatible with the PyTorch library.
 
