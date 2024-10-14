@@ -12,6 +12,8 @@ feature_image: "https://picsum.photos/2560/600?image=733"
 image: "https://picsum.photos/2560/600?image=733"
 ---
 
+**[Access my Colab Notebook here](https://colab.research.google.com/drive/1L2c28_7y4yzPzVE5FWv2O2wVa-HcEAiE?usp=sharing)**
+
 ### SCAD regularization and variable selection
 The smoothly clipped absolute deviation (SCAD) penalty was designed to encourage sparse solutions to the least squares problem, while also allowing for large values of β.
 
@@ -554,6 +556,181 @@ SCAD mean error: 3.779851160895123
 ### Applying to the Concrete dataset with quadratic interaction terms
 Using the methods above, I want to determine a variable selection for the Concrete data set with quadratic interaction terms (polynomial features of degree 2). To solve this, you should consider choosing the best weight for the penalty function. What is the ideal model size (number of variables with non-zero weights), and what is the cross-validated mean square error?
 
+Importing necessary libraries and the dataset, then scaling my data with StandardScaler and incorporating interaction terms with scikit-learn's PolynomialFeatures. :
+```python
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.model_selection import KFold
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_absolute_error as mae, mean_squared_error as mse, r2_score as R2
+
+concrete = pd.read_csv('/content/drive/My Drive/DATA440_Capstone/Data Sets/concrete.csv')
+x = concrete.drop('strength',axis=1)
+y = concrete['strength']
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+x_poly = PolynomialFeatures(degree=2).fit_transform(X_scaled)
+
+X = torch.tensor(x_poly,device=device)
+y= torch.tensor(y,device=device)
+```
+
+Using 5 folds, I tested each model respectively:
+
+```python
+elastic_net_results = []
+elastic_net_best_alpha = None
+elastic_net_best_model_size = None
+elastic_net_best_mse = float('inf')
+
+alphas = [0.001, 0.01, 0.1, 1.0, 10.0] 
+
+for alpha in alphas:
+    kfold_mse = []
+    kfold_model_size = []
+
+    for train_idx, val_idx in kf.split(x_poly):
+        X_train, X_val = X[train_idx], X[val_idx]
+        y_train, y_val = y[train_idx], y[val_idx]
+
+        # Initialize ElasticNet model
+        elastic_net_model = MyElasticNet(input_size= X.shape[1], alpha=alpha, l1_ratio=0.5)
+        elastic_net_model.fit(X_train, y_train, num_epochs=500, learning_rate=0.01)
+
+        # Predict on validation set
+        y_val_pred = elastic_net_model.predict(X_val)
+
+        # Compute MSE on validation set
+        mse_value = mse(y_val, y_val_pred)
+        kfold_mse.append(mse_value)
+
+        # Determine model size (number of non-zero coefficients)
+        model_size = torch.sum(elastic_net_model.get_coefficients() != 0).item()
+        kfold_model_size.append(model_size)
+
+    # Average MSE and model size across folds
+    avg_mse = np.mean(kfold_mse)
+    avg_model_size = np.mean(kfold_model_size)
+
+    if avg_mse < elastic_net_best_mse:
+        elastic_net_best_mse = avg_mse
+        elastic_net_best_alpha = alpha
+        elastic_net_best_model_size = avg_model_size
+
+elastic_net_results = {
+    'best_alpha': elastic_net_best_alpha,
+    'best_model_size': elastic_net_best_model_size,
+    'best_mse': elastic_net_best_mse
+}
+```
+SquareRoot Lasso
+
+```python
+sqrt_lasso_results = []
+sqrt_lasso_best_lambda = None
+sqrt_lasso_best_model_size = None
+sqrt_lasso_best_mse = float('inf')
+
+lambdas = [0.001, 0.01, 0.1, 1.0, 10.0]  # Regularization strength values to try
+
+for lambda_ in lambdas:
+    kfold_mse = []
+    kfold_model_size = []
+
+    for train_idx, val_idx in kf.split(x_poly):
+        X_train, X_val = X[train_idx], X[val_idx]
+        y_train, y_val = y[train_idx], y[val_idx]
+
+        # Initialize ElasticNet model
+        sqrt_lasso_model = MySqrtLasso(input_size=x_poly.shape[1], alpha=alpha)
+        sqrt_lasso_model.fit(X_train, y_train, num_epochs=500, learning_rate=0.01)
+
+        # Predict on validation set
+        y_val_pred = sqrt_lasso_model(X_val).detach().numpy()
+
+        # Compute MSE on validation set
+        mse_value = mse(y_val.numpy(), y_val_pred)
+        kfold_mse.append(mse_value)
+
+        # Determine model size (number of non-zero coefficients)
+        model_size = torch.sum(sqrt_lasso_model.linear.weight != 0).item()
+        kfold_model_size.append(model_size)
+
+    # Average MSE and model size across folds
+    avg_mse = np.mean(kfold_mse)
+    avg_model_size = np.mean(kfold_model_size)
+
+    if avg_mse < sqrt_lasso_best_mse:
+        sqrt_lasso_best_mse = avg_mse
+        sqrt_lasso_best_lambda = lambda_
+        sqrt_lasso_best_model_size = avg_model_size
+
+sqrt_lasso_results = {
+    'best_lambda': sqrt_lasso_best_lambda,
+    'best_model_size': sqrt_lasso_best_model_size,
+    'best_mse': sqrt_lasso_best_mse
+}
+```
+SCAD
+```python
+scad_results = []
+scad_best_lambda = None
+scad_best_model_size = None
+scad_best_mse = float('inf')
+
+for lambda_ in lambdas:
+    kfold_mse = []
+    kfold_model_size = []
+
+    for train_idx, val_idx in kf.split(x_poly):
+        X_train, X_val = X[train_idx], X[val_idx]
+        y_train, y_val = y[train_idx], y[val_idx]
+
+        # Initialize SCAD model
+        scad_model = SCAD(input_size=x_poly.shape[1], lambda_val=lambda_)
+        scad_model.fit(X_train, y_train, num_epochs=500, learning_rate=0.01)
+
+        # Predict on validation set
+        y_val_pred = scad_model(X_val).detach().numpy()
+
+        # Compute MSE on validation set
+        mse_value = mse(y_val.numpy(), y_val_pred)
+        kfold_mse.append(mse_value)
+
+        # Determine model size (number of non-zero coefficients)
+        model_size = torch.sum(scad_model.linear.weight != 0).item()
+        kfold_model_size.append(model_size)
+
+
+    # Average MSE and model size across folds
+    avg_mse = np.mean(kfold_mse)
+    avg_model_size = np.mean(kfold_model_size)
+
+    if avg_mse < scad_best_mse:
+        scad_best_mse = avg_mse
+        scad_best_lambda = lambda_
+        scad_best_model_size = avg_model_size
+
+scad_results = {
+    'best_lambda': scad_best_lambda,
+    'best_model_size': scad_best_model_size,
+    'best_mse': scad_best_mse
+}
+```
+
+Finally looking at the results of running 
+
+```python
+print("ElasticNet Results:", elastic_net_results)
+print("SqrtLasso Results:", sqrt_lasso_results)
+print("SCAD Results:", scad_results)
+```
+Output:
+```
+ElasticNet Results: {'best_alpha': 1.0, 'best_model_size': 231.0, 'best_mse': 505.28523515544873}
+SqrtLasso Results: {'best_lambda': 0.1, 'best_model_size': 231.0, 'best_mse': 1754.022758336626}
+SCAD Results: {'best_lambda': 10.0, 'best_model_size': 231.0, 'best_mse': 616.9577948674624}
+```
 ### References
 
 
