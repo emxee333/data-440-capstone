@@ -496,9 +496,9 @@ sns.heatmap(np.corrcoef(np.transpose(x[:,:5])),cmap='bwr',vmin=-1,vmax=1,annot=T
 plt.show()
 ```
 
-{% include figure.html image="/images/happiness_plots.png" caption="Subplots of feature correlation" %}
+{% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/images/happiness_corrmatrix.png" caption="Subplots of feature correlation" %}
 
-{% include figure.html image="/images/happiness_corrmatrix.png" caption="Correlation matrix" %}
+{% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/images/happiness_corrmatrix.png" caption="Correlation matrix" %}
 
 Comparing the errors between ElasticNet, SqrtLasso, and SCAD:
 
