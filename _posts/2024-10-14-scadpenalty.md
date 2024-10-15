@@ -194,8 +194,6 @@ tensor([[ 1.0890e+00,  3.0488e-04,  1.8458e+00, -1.4293e-03, -1.3319e-04,
 The coefficients that are not close to zero are significant variables based on SCAD regularization.
 Therefore, the variables, Social support and Freedom to make life choices are significant, positively correlated factors in Happiness scores.
 
-# **fix this**
-
 ### Experimenting with ElasticNet, SqrtLasso, and SCAD
 Let's generate 200 data sets where the input features have a strong correlation structure and apply ElasticNet, SqrtLasso and SCAD to check which method produces the best approximation of an ideal solution. I'll use a "betastar"  with a sparsity pattern of my choice.
 
@@ -421,6 +419,7 @@ def make_correlated_features(num_samples,p,rho,betastar,noise_std=0.12):
   y = X @ betastar + noise
   return X,y
 ```
+Setting my parameters and creating a betastar with my own sparsity pattern:
 ```python
 beta =np.array([-1,1,3,0,2,4])
 beta = beta.reshape(-1,1)
@@ -498,11 +497,12 @@ plt.show()
 ```
 #**insert images**
 
-{% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/_posts/images/happiness_plots.png" caption="Subplots of feature correlation" %}
+{% include figure.html image="/blob/main/_posts/images/happiness_plots.png" caption="Subplots of feature correlation" %}
 
-{% include figure.html image="https://github.com/emxee333/data-440-capstone/blob/main/_posts/images/happiness_corrmatrix.png" caption="Correlation matrix" %}
+{% include figure.html image="/blob/main/_posts/images/happiness_corrmatrix.png" caption="Correlation matrix" %}
 
-Comparing 
+Comparing the errors between ElasticNet, SqrtLasso, and SCAD:
+
 ```python
 elastic_net_errors = []
 sqrt_lasso_errors = []
@@ -556,9 +556,10 @@ ElasticNet mean error: 3.0669821328959745
 SqrtLasso mean error: 1.585806390195204
 SCAD mean error: 3.779851160895123
 ```
+In my experiment, SqrtLasso yields the best performance compared to ElasticNet and SCAD.
 
 ### Applying to the Concrete dataset with quadratic interaction terms
-Using the methods above, I want to determine a variable selection for the Concrete data set with quadratic interaction terms (polynomial features of degree 2). To solve this, you should consider choosing the best weight for the penalty function. What is the ideal model size (number of variables with non-zero weights), and what is the cross-validated mean square error?
+Using the methods above, I want to determine a variable selection for the Concrete data set with quadratic interaction terms (polynomial features of degree 2). To solve this, I compared different weights for the penalty function. I found the best model size and c What is the ideal model size and cross-validated mean square error for each model.
 
 Importing necessary libraries and the dataset, then scaling my data with StandardScaler and incorporating interaction terms with scikit-learn's PolynomialFeatures. :
 ```python
@@ -581,6 +582,7 @@ y= torch.tensor(y,device=device)
 
 Using 5 folds, I tested each model respectively:
 
+**ElasticNet**
 ```python
 elastic_net_results = []
 elastic_net_best_alpha = None
@@ -627,7 +629,7 @@ elastic_net_results = {
     'best_mse': elastic_net_best_mse
 }
 ```
-SquareRoot Lasso
+**SquareRoot Lasso**
 
 ```python
 sqrt_lasso_results = []
@@ -675,7 +677,7 @@ sqrt_lasso_results = {
     'best_mse': sqrt_lasso_best_mse
 }
 ```
-SCAD
+**SCAD**
 ```python
 scad_results = []
 scad_best_lambda = None
@@ -722,7 +724,7 @@ scad_results = {
 }
 ```
 
-Finally looking at the results of running 
+Finally looking at the results of running eeach model 
 
 ```python
 print("ElasticNet Results:", elastic_net_results)
@@ -735,6 +737,4 @@ ElasticNet Results: {'best_alpha': 1.0, 'best_model_size': 231.0, 'best_mse': 50
 SqrtLasso Results: {'best_lambda': 0.1, 'best_model_size': 231.0, 'best_mse': 1754.022758336626}
 SCAD Results: {'best_lambda': 10.0, 'best_model_size': 231.0, 'best_mse': 616.9577948674624}
 ```
-### References
-
-
+In the case of the concrete datasetm the model with the best performance based on the cross-validated mean squared error is ElasticNet with an alpha of 1.0 and model size of 231.
